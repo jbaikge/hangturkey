@@ -15,6 +15,7 @@ func NewWordHandler(w http.ResponseWriter, req *http.Request) {
 	if state.UpdateCurrent() {
 		session.Values["state"] = state
 		session.Save(req, w)
+		http.Redirect(w, req, "/play", http.StatusTemporaryRedirect)
 	} else {
 		log.Print("FORWARD TO LEADERBOARD")
 	}
