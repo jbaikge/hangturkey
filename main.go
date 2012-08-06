@@ -3,7 +3,6 @@ package main
 import (
 	"code.google.com/p/gorilla/sessions"
 	"encoding/gob"
-	"html/template"
 	"log"
 	"net/http"
 )
