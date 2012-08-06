@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"code.google.com/p/gorilla/securecookie"
 	"code.google.com/p/gorilla/sessions"
 	"encoding/gob"
 	"html/template"
@@ -20,7 +19,7 @@ var (
 		"templates/_base.html",
 		"templates/index.html",
 	))
-	store = sessions.NewCookieStore([]byte("1234567890123456"))
+	store = sessions.NewCookieStore([]byte("MMMMMMM, TURKEYS"))
 )
 
 func init() {
