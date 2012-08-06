@@ -1,6 +1,7 @@
 package main
 
 import (
+	"code.google.com/p/gorilla/sessions"
 	"log"
 	"math/rand"
 )
@@ -8,6 +9,15 @@ import (
 type GameState struct {
 	Scores      map[string]int
 	CurrentWord string
+}
+
+func StateFromSession(session *sessions.Session) (state GameState) {
+	if s, ok := session.Values["state"]; ok {
+		state = s.(GameState)
+	} else {
+		state = GameState{}
+	}
+	return
 }
 
 func (s GameState) HasWon() (won bool) {

@@ -11,12 +11,7 @@ func init() {
 
 func NewWordHandler(w http.ResponseWriter, req *http.Request) {
 	session, _ := store.Get(req, "state")
-	var state GameState
-	if s, ok := session.Values["state"]; ok {
-		state = s.(GameState)
-	} else {
-		state = GameState{}
-	}
+	state := StateFromSession(session)
 	if state.UpdateCurrent() {
 		session.Values["state"] = state
 		session.Save(req, w)
