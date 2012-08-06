@@ -1,5 +1,6 @@
 *
-
 !.gitignore
 !*.go
 !*.json
+!*/
+!templates/*.html

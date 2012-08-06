@@ -1,0 +1,14 @@
+{{ define "title" }}Hang Turkey - Make Your Best Guess{{ end }}
+{{ define "content" }}
+<form method="get" action="/guess">
+	<ol>
+		
+		<li><input type="text" maxlength="1" size="1" name="letter[0]"></li>
+	</ol>
+	<p><input type="submit"></p>
+</form>
+<pre>
+	PSST! Hey! The word is: {{ .CurrentWord }}
+	The first letter is: {{ range .Letters }}{{ . }} {{ end }}
+</pre>
+{{ end }}

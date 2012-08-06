@@ -4,6 +4,7 @@ import (
 	"code.google.com/p/gorilla/sessions"
 	"log"
 	"math/rand"
+	"strings"
 )
 
 type GameState struct {
@@ -28,6 +29,10 @@ func (s GameState) HasWon() (won bool) {
 		}
 	}
 	return
+}
+
+func (s GameState) Letters() []string {
+	return strings.Split(s.CurrentWord, "")
 }
 
 func (s *GameState) UpdateCurrent() bool {
