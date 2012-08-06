@@ -8,12 +8,7 @@ import (
 	"net/http"
 )
 
-
 var (
-	index = template.Must(template.ParseFiles(
-		"templates/_base.html",
-		"templates/index.html",
-	))
 	store = sessions.NewCookieStore([]byte("MMMMMMM, TURKEYS"))
 )
 
