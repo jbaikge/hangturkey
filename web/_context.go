@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"code.google.com/p/gorilla/sessions"
