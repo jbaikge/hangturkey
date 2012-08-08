@@ -1,10 +1,10 @@
 package main
 
 import (
-	"encoding/gob"
+	"log"
 	"net/http"
 
-	_ "github.com/jbaikge/hangturkey/app"
+	_ "github.com/jbaikge/hangturkey/web"
 )
 
 func main() {
