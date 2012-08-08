@@ -2,6 +2,7 @@ package main
 
 import (
 	"code.google.com/p/gorilla/sessions"
+	"encoding/gob"
 	"log"
 	"math/rand"
 	"strings"
@@ -10,6 +11,10 @@ import (
 type GameState struct {
 	Scores      map[string]int
 	CurrentWord string
+}
+
+func init() {
+	gob.Register(GameState{})
 }
 
 func StateFromSession(session *sessions.Session) (state GameState) {
