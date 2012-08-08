@@ -17,14 +17,7 @@ func init() {
 	gob.Register(GameState{})
 }
 
-func StateFromSession(session *sessions.Session) (state GameState) {
-	if s, ok := session.Values["state"]; ok {
-		state = s.(GameState)
-	} else {
-		state = GameState{}
-	}
-	return
-}
+
 
 func (s GameState) HasWon() (won bool) {
 	won = true
