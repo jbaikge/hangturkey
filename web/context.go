@@ -1,7 +1,10 @@
 package web
 
 import (
+	"net/http"
+
 	"code.google.com/p/gorilla/sessions"
+	"github.com/jbaikge/hangturkey/app"
 )
 
 var (
@@ -9,11 +12,11 @@ var (
 )
 
 type Context struct {
-	Session sessions.Session
-	State   GameState
+	Session *sessions.Session
+	State   app.GameState
 }
 
-func Close() {
+func (c *Context) Close() {
 	// noop
 }
 
@@ -27,11 +30,11 @@ func NewContext(req *http.Request) (*Context, error) {
 	}, nil
 }
 
-func stateFromSession(session *sessions.Session) (state GameState) {
+func stateFromSession(session *sessions.Session) (state app.GameState) {
 	if s, ok := session.Values["state"]; ok {
-		state = s.(GameState)
+		state = s.(app.GameState)
 	} else {
-		state = GameState{}
+		state = app.GameState{}
 	}
 	return
 }
