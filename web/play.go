@@ -14,13 +14,11 @@ var play = template.Must(template.New("_base.html").Funcs(template.FuncMap{
 ))
 
 func init() {
-	http.HandleFunc("/play", PlayHandler)
+	http.HandleFunc("/play", WebHandler(PlayHandler))
 }
 
-func PlayHandler(w http.ResponseWriter, req *http.Request) {
-	session, _ := store.Get(req, "state")
-	state := StateFromSession(session)
-	if err := play.Execute(w, state); err != nil {
+func PlayHandler(w http.ResponseWriter, req *http.Request, ctx *Context) {
+	if err := play.Execute(w, ctx.State); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }

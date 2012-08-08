@@ -1,5 +1,6 @@
 package web
 
+/*
 import (
 	"log"
 	"net/http"
@@ -20,3 +21,4 @@ func NewWordHandler(w http.ResponseWriter, req *http.Request) {
 		log.Print("FORWARD TO LEADERBOARD")
 	}
 }
+*/
