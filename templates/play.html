@@ -2,8 +2,13 @@
 {{ define "content" }}
 <form method="get" action="/guess">
 	<ol>
-		
-		<li><input type="text" maxlength="1" size="1" name="letter[0]"></li>
+		{{ range $i, $l := .Letters }}
+		<li>
+			{{ if $l }}
+			<input type="text" maxlength="1" size="1" name="letter[{{ $i }}]" value="{{ $l }}">
+			{{ end }}
+		</li>
+		{{ end }}
 	</ol>
 	<p><input type="submit"></p>
 </form>

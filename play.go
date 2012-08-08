@@ -3,9 +3,12 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"strings"
 )
 
-var play = template.Must(template.ParseFiles(
+var play = template.Must(template.New("templates/play.html").Funcs(template.FuncMap{
+	"TrimSpace": strings.TrimSpace,
+}).ParseFiles(
 	"templates/_base.html",
 	"templates/play.html",
 ))
