@@ -1,7 +1,6 @@
-package web
+package app
 
 import (
-	"code.google.com/p/gorilla/sessions"
 	"encoding/gob"
 	"log"
 	"math/rand"
@@ -16,8 +15,6 @@ type GameState struct {
 func init() {
 	gob.Register(GameState{})
 }
-
-
 
 func (s GameState) HasWon() (won bool) {
 	won = true
