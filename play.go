@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var play = template.Must(template.New("templates/play.html").Funcs(template.FuncMap{
+var play = template.Must(template.New("_base.html").Funcs(template.FuncMap{
 	"TrimSpace": strings.TrimSpace,
 }).ParseFiles(
 	"templates/_base.html",
