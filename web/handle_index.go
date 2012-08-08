@@ -6,8 +6,8 @@ import (
 )
 
 var index = template.Must(template.ParseFiles(
-	"templates/_base.html",
-	"templates/index.html",
+	"web/templates/_base.html",
+	"web/templates/index.html",
 ))
 
 func init() {

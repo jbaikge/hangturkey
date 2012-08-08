@@ -9,8 +9,8 @@ import (
 var play = template.Must(template.New("_base.html").Funcs(template.FuncMap{
 	"TrimSpace": strings.TrimSpace,
 }).ParseFiles(
-	"templates/_base.html",
-	"templates/play.html",
+	"web/templates/_base.html",
+	"web/templates/play.html",
 ))
 
 func init() {
