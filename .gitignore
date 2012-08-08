@@ -3,4 +3,5 @@
 !*.go
 !*.json
 !*/
-!templates/*.html
+!web/templates/*.html
+!app
