@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"strings"
 )
 
 const guessURL = "/guess/"
@@ -14,7 +13,7 @@ func init() {
 }
 
 func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error {
-	letter := strings.Replace(req.URL.String(), guessURL, "", 1)
+	letter := req.URL.String()[len(guessURL):]
 	if len(letter) == 0 {
 		return errors.New("No letter provided")
 	}
