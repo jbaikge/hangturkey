@@ -1,10 +1,18 @@
 package web
 
 import (
+	"encoding/json"
 	"errors"
-	"fmt"
+	"log"
 	"net/http"
+	"strings"
 )
+
+type guessMessage struct {
+	Letter  string
+	Message string
+	Score   int
+}
 
 const guessURL = "/guess/"
 
@@ -13,12 +21,45 @@ func init() {
 }
 
 func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error {
-	letter := req.URL.String()[len(guessURL):]
-	if len(letter) == 0 {
+	l := req.URL.String()[len(guessURL):]
+	if len(l) == 0 {
 		return errors.New("No letter provided")
 	}
-	letter = letter[0:1]
-	fmt.Fprintf(w, "GUESS:  %s\n", req.URL.String())
-	fmt.Fprintf(w, "LETTER: %s\n", letter)
+	l = strings.ToLower(l[:1])
+	current := ctx.State.CurrentWord
+	guesses := ctx.State.Guesses[current]
+	msg := &guessMessage{}
+
+	log.Printf("GUESS: %s WORD: %s", l, current)
+
+	// See if the word was already guessed
+	if strings.Contains(current, l) {
+		log.Print("CORRECT")
+		if strings.Contains(guesses.Correct, l) {
+			log.Print("ALREADY GUESSED")
+			msg.Message = "You have already guessed " + l
+		} else {
+			guesses.Correct += l
+			msg.Letter = l
+			msg.Score = 5
+		}
+	} else {
+		log.Print("INCORRECT")
+		if strings.Contains(guesses.Incorrect, l) {
+			log.Print("ALREADY GUESSED")
+			msg.Message = "You have already guessed " + l
+		} else {
+			guesses.Incorrect += l
+			msg.Letter = l
+			msg.Score = -1
+		}
+	}
+
+	// Resave guesses
+	ctx.State.Guesses[current] = guesses
+	ctx.SaveSession()
+
+	// Send message
+	json.NewEncoder(w).Encode(msg)
 	return nil
 }

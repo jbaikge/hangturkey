@@ -47,6 +47,7 @@ func (s *GameState) UpdateCurrent() bool {
 		s.Guesses = make(map[string]Guess, len(words))
 		for _, w := range words {
 			s.Scores[w] = 0
+			s.Guesses[w] = Guess{}
 		}
 	}
 	// Check if we've already won - no need to pick random out of nothing

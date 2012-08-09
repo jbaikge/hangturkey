@@ -1,6 +1,7 @@
 package web
 
 import (
+	"log"
 	"net/http"
 
 	"code.google.com/p/gorilla/sessions"
@@ -22,6 +23,7 @@ func NewContext(w http.ResponseWriter, req *http.Request) (*Context, error) {
 	// Ignore session from blank error
 	session, _ := store.Get(req, "state")
 	state := stateFromSession(session)
+	log.Printf("STATE: %+v", state)
 	return &Context{
 		Session: session,
 		State:   state,
