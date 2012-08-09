@@ -30,13 +30,9 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	guesses := ctx.State.Guesses[current]
 	msg := &guessMessage{}
 
-	log.Printf("GUESS: %s WORD: %s", l, current)
-
 	// See if the word was already guessed
 	if strings.Contains(current, l) {
-		log.Print("CORRECT")
 		if strings.Contains(guesses.Correct, l) {
-			log.Print("ALREADY GUESSED")
 			msg.Message = "You have already guessed " + l
 		} else {
 			guesses.Correct += l
@@ -44,9 +40,7 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 			msg.Score = 5
 		}
 	} else {
-		log.Print("INCORRECT")
 		if strings.Contains(guesses.Incorrect, l) {
-			log.Print("ALREADY GUESSED")
 			msg.Message = "You have already guessed " + l
 		} else {
 			guesses.Incorrect += l
