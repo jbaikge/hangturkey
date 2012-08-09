@@ -3,7 +3,6 @@ package web
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -27,30 +26,25 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	}
 	l = strings.ToLower(l[:1])
 	current := ctx.State.CurrentWord
-	guesses := ctx.State.Guesses[current]
-	msg := &guessMessage{}
+	g := ctx.State.Guesses[current]
+	msg := &guessMessage{
+		Letter: l,
+	}
 
 	// See if the word was already guessed
-	if strings.Contains(current, l) {
-		if strings.Contains(guesses.Correct, l) {
-			msg.Message = "You have already guessed " + l
-		} else {
-			guesses.Correct += l
-			msg.Letter = l
-			msg.Score = 5
-		}
-	} else {
-		if strings.Contains(guesses.Incorrect, l) {
-			msg.Message = "You have already guessed " + l
-		} else {
-			guesses.Incorrect += l
-			msg.Letter = l
-			msg.Score = -1
-		}
+	switch {
+	case strings.Contains(g.Correct, l) || strings.Contains(g.Incorrect, l):
+		msg.Message = "You have already guessed " + l
+	case strings.Contains(current, l):
+		g.Correct += l
+		msg.Score = 5
+	case !strings.Contains(current, l):
+		g.Incorrect += l
+		msg.Score = -1
 	}
 
 	// Resave guesses
-	ctx.State.Guesses[current] = guesses
+	ctx.State.Guesses[current] = g
 	ctx.SaveSession()
 
 	// Send message
