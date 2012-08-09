@@ -14,20 +14,29 @@ var (
 type Context struct {
 	Session *sessions.Session
 	State   app.GameState
+	request *http.Request
+	writer  http.ResponseWriter
 }
 
-func (c *Context) Close() {
-	// noop
-}
-
-func NewContext(req *http.Request) (*Context, error) {
+func NewContext(w http.ResponseWriter, req *http.Request) (*Context, error) {
 	// Ignore session from blank error
 	session, _ := store.Get(req, "state")
 	state := stateFromSession(session)
 	return &Context{
 		Session: session,
 		State:   state,
+		request: req,
+		writer:  w,
 	}, nil
+}
+
+func (c *Context) Close() {
+	// noop
+}
+
+func (c *Context) SaveSession() {
+	c.Session.Values["state"] = c.State
+	c.Session.Save(c.request, c.writer)
 }
 
 func stateFromSession(session *sessions.Session) (state app.GameState) {

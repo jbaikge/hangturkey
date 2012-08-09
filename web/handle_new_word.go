@@ -11,8 +11,7 @@ func init() {
 
 func NewWordHandler(w http.ResponseWriter, req *http.Request, ctx *Context) (err error) {
 	if ctx.State.UpdateCurrent() {
-		ctx.Session.Values["state"] = ctx.State
-		ctx.Session.Save(req, w)
+		ctx.SaveSession()
 		http.Redirect(w, req, "/play", http.StatusTemporaryRedirect)
 	} else {
 		log.Print("FORWARD TO LEADERBOARD")

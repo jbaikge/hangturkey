@@ -7,9 +7,15 @@ import (
 	"strings"
 )
 
+type Guess struct {
+	Correct   string
+	Incorrect string
+}
+
 type GameState struct {
-	Scores      map[string]int
 	CurrentWord string
+	Guesses     map[string]Guess
+	Scores      map[string]int
 }
 
 func init() {
@@ -38,6 +44,7 @@ func (s *GameState) UpdateCurrent() bool {
 	// Initialize scores if need-be
 	if s.Scores == nil {
 		s.Scores = make(map[string]int, len(words))
+		s.Guesses = make(map[string]Guess, len(words))
 		for _, w := range words {
 			s.Scores[w] = 0
 		}
