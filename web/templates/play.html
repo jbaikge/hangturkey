@@ -93,9 +93,4 @@ $(function() {
 	<div><input type="submit"></div>
 </form>
 <div id="NewWord">Congratualations! You solved it! <a href="/new-word">Get a new word!</a></div>
-<pre>
-	PSST! Hey! The word is: {{ .CurrentWord }}
-	Current Word Letters:   {{ range .CurrentLetters }}{{ printf "% -2s" . }}{{ end }}
-	Guessed Letters:        {{ range .GuessedLetters }}{{ printf "% -2s" . }}{{ end }}
-</pre>
 {{ end }}
