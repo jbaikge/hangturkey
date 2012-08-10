@@ -1,19 +1,36 @@
 {{ define "title" }}Hang Turkey - Make Your Best Guess{{ end }}
+
 {{ define "content" }}
-<form method="get" action="/guess">
-	<ol>
-		{{ range $i, $l := .Letters }}
-		<li>
-			{{ if $l }}
-			<input type="text" maxlength="1" size="1" name="letter[{{ $i }}]" value="{{ $l }}">
-			{{ end }}
-		</li>
+{{ $state := . }}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+$(function() {
+	$('form#Guess').submit(function(e) {
+		e.PreventDefault()
+
+	})
+})
+</script>
+
+<ol>
+	{{ range $i, $l := .GuessedLetters }}
+	<li>
+		{{ if $state.IsSpace $i }}
+		<span class="space"></span>
+		{{ else }}
+		<span class="guessed">{{ $l }}</span>
 		{{ end }}
-	</ol>
-	<p><input type="submit"></p>
+	</li>
+	{{ end }}
+</ol>
+<form action="/guess" method="get" id="Guess">
+	<div><label for="Letter">Guess a letter:</label> <input type="text" maxlength="1" size="1" id="Letter"></div>
+	<div><input type="submit"></div>
 </form>
 <pre>
 	PSST! Hey! The word is: {{ .CurrentWord }}
-	The first letter is: {{ range .Letters }}{{ . }} {{ end }}
+	Current Word Letters:   {{ range .CurrentLetters }}{{ printf "% -2s" . }}{{ end }}
+	Guessed Letters:        {{ range .GuessedLetters }}{{ printf "% -2s" . }}{{ end }}
 </pre>
 {{ end }}
