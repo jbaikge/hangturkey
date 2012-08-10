@@ -22,6 +22,20 @@ func init() {
 	gob.Register(GameState{})
 }
 
+func (s GameState) CurrentLetters() []string {
+	return strings.Split(s.CurrentWord, "")
+}
+
+func (s GameState) GuessedLetters() []string {
+	guessed := make([]string, len(s.CurrentWord))
+	for i, l := range s.CurrentLetters() {
+		if strings.Contains(s.Guesses[s.CurrentWord].Correct, l) {
+			guessed[i] = l
+		}
+	}
+	return guessed
+}
+
 func (s GameState) HasWon() (won bool) {
 	won = true
 	for _, score := range s.Scores {
@@ -32,8 +46,8 @@ func (s GameState) HasWon() (won bool) {
 	return
 }
 
-func (s GameState) Letters() []string {
-	return strings.Split(s.CurrentWord, "")
+func (s GameState) IsSpace(idx int) bool {
+	return s.CurrentLetters()[idx] == " "
 }
 
 func (s *GameState) UpdateCurrent() bool {
