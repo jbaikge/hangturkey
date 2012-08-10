@@ -8,12 +8,18 @@ import (
 )
 
 type guessMessage struct {
-	Guessed []string
-	Message string
-	Score   int
+	Correct    bool
+	Guessed    []string
+	Message    string
+	TotalScore int
+	WordScore  int
 }
 
-const guessURL = "/guess/"
+const (
+	guessURL       = "/guess/"
+	correctScore   = 5
+	incorrectScore = -1
+)
 
 func init() {
 	http.Handle(guessURL, WebHandler(GuessHandler))
@@ -28,15 +34,13 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	msg := &guessMessage{}
 
 	correct, err := ctx.State.Guess(l)
-	switch {
-	case err != nil:
+	if err != nil {
 		msg.Message = err.Error()
-	case correct:
-		msg.Score = 5
-	case !correct:
-		msg.Score = -1
 	}
+	msg.Correct = correct
 	msg.Guessed = ctx.State.GuessedLetters()
+	msg.TotalScore = ctx.State.TotalScore(correctScore, incorrectScore)
+	msg.WordScore = ctx.State.CurrentWordScore(correctScore, incorrectScore)
 
 	// Resave guesses
 	ctx.SaveSession()
