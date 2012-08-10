@@ -8,7 +8,7 @@ import (
 )
 
 type guessMessage struct {
-	Letter  string
+	Guessed []string
 	Message string
 	Score   int
 }
@@ -27,9 +27,7 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	l = strings.ToLower(l[:1])
 	current := ctx.State.CurrentWord
 	g := ctx.State.Guesses[current]
-	msg := &guessMessage{
-		Letter: l,
-	}
+	msg := &guessMessage{}
 
 	// See if the word was already guessed
 	switch {
@@ -42,6 +40,7 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 		g.Incorrect += l
 		msg.Score = -1
 	}
+	msg.Guessed = ctx.State.GuessedLetters()
 
 	// Resave guesses
 	ctx.State.Guesses[current] = g
