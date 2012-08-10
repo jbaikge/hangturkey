@@ -2,10 +2,22 @@ package web
 
 import (
 	"net/http"
+	"strings"
+
+	"github.com/jbaikge/hangturkey/app"
 )
+
+type playContext struct {
+	Alphabet []string
+	State    app.GameState
+}
+
+var alphabet []string
 
 func init() {
 	http.Handle("/play", WebHandler(PlayHandler))
+	alphabet = strings.Split("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "")
+
 }
 
 func PlayHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error {
@@ -13,5 +25,9 @@ func PlayHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error {
 		"web/templates/_base.html",
 		"web/templates/play.html",
 	)
-	return play.Execute(w, ctx.State)
+	c := playContext{
+		State:    ctx.State,
+		Alphabet: alphabet,
+	}
+	return play.Execute(w, c)
 }
