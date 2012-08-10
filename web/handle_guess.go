@@ -25,25 +25,20 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 		return errors.New("No letter provided")
 	}
 	l = strings.ToLower(l[:1])
-	current := ctx.State.CurrentWord
-	g := ctx.State.Guesses[current]
 	msg := &guessMessage{}
 
-	// See if the word was already guessed
+	correct, err := ctx.State.Guess(l)
 	switch {
-	case strings.Contains(g.Correct, l) || strings.Contains(g.Incorrect, l):
-		msg.Message = "You have already guessed " + l
-	case strings.Contains(current, l):
-		g.Correct += l
+	case err != nil:
+		msg.Message = err.Error()
+	case correct:
 		msg.Score = 5
-	case !strings.Contains(current, l):
-		g.Incorrect += l
+	case !correct:
 		msg.Score = -1
 	}
 	msg.Guessed = ctx.State.GuessedLetters()
 
 	// Resave guesses
-	ctx.State.Guesses[current] = g
 	ctx.SaveSession()
 
 	// Send message

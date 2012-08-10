@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/gob"
+	"errors"
 	"log"
 	"math/rand"
 	"strings"
@@ -24,6 +25,21 @@ func init() {
 
 func (s GameState) CurrentLetters() []string {
 	return strings.Split(s.CurrentWord, "")
+}
+
+func (s *GameState) Guess(letter string) (correct bool, err error) {
+	correct = strings.Contains(s.CurrentWord, letter)
+	g := s.Guesses[s.CurrentWord]
+	switch {
+	case strings.Contains(g.Correct, letter) || strings.Contains(g.Incorrect, letter):
+		err = errors.New("You have already guessed " + letter)
+	case correct:
+		g.Correct += letter
+	case !correct:
+		g.Incorrect += letter
+	}
+	s.Guesses[s.CurrentWord] = g
+	return
 }
 
 func (s GameState) GuessedLetters() []string {
