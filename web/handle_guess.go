@@ -16,11 +16,7 @@ type guessMessage struct {
 	WordScore  int
 }
 
-const (
-	guessURL       = "/guess/"
-	correctScore   = 5
-	incorrectScore = -1
-)
+const guessURL = "/guess/"
 
 func init() {
 	http.Handle(guessURL, WebHandler(GuessHandler))
@@ -41,8 +37,8 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	msg.Complete = ctx.State.CurrentComplete()
 	msg.Correct = correct
 	msg.Guessed = ctx.State.GuessedLetters()
-	msg.TotalScore = ctx.State.TotalScore(correctScore, incorrectScore)
-	msg.WordScore = ctx.State.CurrentWordScore(correctScore, incorrectScore)
+	msg.TotalScore = ctx.TotalScore()
+	msg.WordScore = ctx.WordScore()
 
 	// Resave guesses
 	ctx.SaveSession()

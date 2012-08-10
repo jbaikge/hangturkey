@@ -8,8 +8,10 @@ import (
 )
 
 type playContext struct {
-	Alphabet []string
-	State    app.GameState
+	Alphabet   []string
+	State      app.GameState
+	TotalScore int
+	WordScore  int
 }
 
 var alphabet []string
@@ -26,8 +28,10 @@ func PlayHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error {
 		"web/templates/play.html",
 	)
 	c := playContext{
-		State:    ctx.State,
-		Alphabet: alphabet,
+		Alphabet:   alphabet,
+		State:      ctx.State,
+		TotalScore: ctx.TotalScore(),
+		WordScore:  ctx.WordScore(),
 	}
 	return play.Execute(w, c)
 }

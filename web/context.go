@@ -8,6 +8,11 @@ import (
 	"github.com/jbaikge/hangturkey/app"
 )
 
+const (
+	correctScore   = 5
+	incorrectScore = -1
+)
+
 var (
 	store = sessions.NewCookieStore([]byte("MMMMMMM, TURKEYS"))
 )
@@ -39,6 +44,14 @@ func (c *Context) Close() {
 func (c *Context) SaveSession() {
 	c.Session.Values["state"] = c.State
 	c.Session.Save(c.request, c.writer)
+}
+
+func (c Context) TotalScore() int {
+	return c.State.TotalScore(correctScore, incorrectScore)
+}
+
+func (c Context) WordScore() int {
+	return c.State.CurrentWordScore(correctScore, incorrectScore)
 }
 
 func stateFromSession(session *sessions.Session) (state app.GameState) {
