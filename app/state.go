@@ -3,7 +3,6 @@ package app
 import (
 	"encoding/gob"
 	"errors"
-	"log"
 	"math/rand"
 	"strings"
 )
@@ -21,6 +20,10 @@ type GameState struct {
 
 func init() {
 	gob.Register(GameState{})
+}
+
+func (s GameState) CurrentComplete() bool {
+	return s.Guesses[s.CurrentWord].Complete
 }
 
 func (s GameState) CurrentLetters() []string {
@@ -41,7 +44,11 @@ func (s *GameState) Guess(letter string) (correct bool, err error) {
 		g.Correct += letter
 		g.Complete = true
 		for i := 0; i < len(s.CurrentWord); i++ {
-			if !strings.Contains(g.Correct, s.CurrentWord[i:i+1]) {
+			l := s.CurrentWord[i : i+1]
+			if l == " " {
+				continue
+			}
+			if !strings.Contains(g.Correct, l) {
 				g.Complete = false
 				break
 			}
@@ -88,7 +95,6 @@ func (s *GameState) UpdateCurrent() bool {
 		unseen  = []string{}
 	)
 	// Initialize guesses if need-be
-	log.Printf("GUESSES: nil: %+v len: %d", s.Guesses == nil, len(s.Guesses))
 	if s.Guesses == nil {
 		s.Guesses = make(map[string]Guess, len(words))
 		for _, w := range words {
@@ -106,14 +112,11 @@ func (s *GameState) UpdateCurrent() bool {
 		}
 	}
 	// Pick a random unseen
-	log.Printf("UNSEEN LEN %d", len(unseen))
 	newWord = unseen[rand.Intn(len(unseen))]
-	log.Printf("STATE      %+v", s)
-	log.Printf("NEW WORD   %s", newWord)
 	s.CurrentWord = newWord
 	return true
 }
 
 func (s GameState) wordScore(w string, correct, incorrect int) int {
-	return len(s.Guesses[w].Correct)*correct + len(s.Guesses[s.CurrentWord].Incorrect)*incorrect
+	return len(s.Guesses[w].Correct)*correct + len(s.Guesses[w].Incorrect)*incorrect
 }
