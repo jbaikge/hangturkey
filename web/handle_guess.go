@@ -8,6 +8,7 @@ import (
 )
 
 type guessMessage struct {
+	Complete   bool
 	Correct    bool
 	Guessed    []string
 	Message    string
@@ -37,6 +38,7 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	if err != nil {
 		msg.Message = err.Error()
 	}
+	msg.Complete = ctx.State.CurrentComplete()
 	msg.Correct = correct
 	msg.Guessed = ctx.State.GuessedLetters()
 	msg.TotalScore = ctx.State.TotalScore(correctScore, incorrectScore)

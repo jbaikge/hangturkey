@@ -3,17 +3,80 @@
 {{ define "content" }}
 {{ $state := . }}
 
+<style type="text/css">
+ol {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+li {
+	background:#CCC;
+	display:block;
+	float:left;
+	margin:0 0.25em;
+	width:2.5em;
+}
+li span {
+	display:block;
+	height:2em;
+	line-height:2em;
+	text-align:center;
+}
+span.guessed {
+	border-bottom:1px solid #000;
+}
+#Error {
+	color:#C10;
+}
+#Guess {
+	clear:both;
+}
+#NewWord {
+	display:none;
+}
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
 $(function() {
 	$('form#Guess').submit(function(e) {
-		e.PreventDefault()
-
+		e.preventDefault()
+		var letter = $('#Letter').val()
+		if (letter == '') {
+			$('#Error').text("Please guess a letter")
+			return
+		}
+		if (!/[a-zA-Z]/.test(letter)) {
+			$('#Error').text("You may only guess letters. Wouldn't want to expidite the turkey's doom, would you?")
+			return
+		}
+		console.log(letter)
+		$.getJSON('/guess/' + letter, function(data) {
+			console.log(data)
+			$('#TotalScore strong').text(data.TotalScore)
+			$('#WordScore strong').text(data.WordScore)
+			if (data.Message != '') {
+				$('#Error').text(data.Message)
+				return
+			}
+			if (!data.Correct) {
+				console.log("Attach next thing to turkey")
+			}
+			$('#Word span').each(function(i, l) {
+				$(l).text(data.Guessed[i])
+			})
+			if (data.Complete) {
+				$('#NewWord').show()
+			}
+		})
+		$('#Letter').val('')
 	})
 })
 </script>
 
-<ol>
+<div id="TotalScore">Total Score: <strong>0</strong></div>
+<div id="WordScore">Word Score: <strong>0</strong></div>
+<ol id="Word">
 	{{ range $i, $l := .GuessedLetters }}
 	<li>
 		{{ if $state.IsSpace $i }}
@@ -25,9 +88,11 @@ $(function() {
 	{{ end }}
 </ol>
 <form action="/guess" method="get" id="Guess">
+	<div id="Error"></div>
 	<div><label for="Letter">Guess a letter:</label> <input type="text" maxlength="1" size="1" id="Letter"></div>
 	<div><input type="submit"></div>
 </form>
+<div id="NewWord">Congratualations! You solved it! <a href="/new-word">Get a new word!</a></div>
 <pre>
 	PSST! Hey! The word is: {{ .CurrentWord }}
 	Current Word Letters:   {{ range .CurrentLetters }}{{ printf "% -2s" . }}{{ end }}
