@@ -56,60 +56,74 @@ li a {
 	position:relative;
 	width:792px;
 }
-#Stage div {
-	position:absolute;
-	background-color:rgba(0, 0, 0, 0.25);
+#Turkey {
+	border:1px solid #F00;
+	width:354px;
+	height:385px;
 }
-#Stage #LeftLeg {
+#Turkey div {
+	position:absolute;
+	xbackground-color:rgba(0, 0, 0, 0.25);
+}
+#Turkey #LeftLeg {
 	background-image:url(../images/turkey_leg_left.svg);
 	background-repeat:no-repeat;
 	height:60px;
-	left:60px;
-	top:350px;
+	left:140px;
+	top:325px;
 	width:38px;
 }
-#Stage #RightLeg {
+#Turkey #RightLeg {
 	background-image:url(../images/turkey_leg_right.svg);
 	background-repeat:no-repeat;
 	height:60px;
-	left:144px;
-	top:350px;
+	left:182px;
+	top:325px;
 	width:38px;
 }
-#Stage #LeftWing {
+#Turkey #LeftWing {
 	background-image:url(../images/turkey_wing_left.svg);
 	background-repeat:no-repeat;
 	height:84px;
 	left:0px;
-	top:0px;
+	top:202px;
 	width:94px;
 }
-#Stage #RightWing {
+#Turkey #RightWing {
 	background-image:url(../images/turkey_wing_right.svg);
 	background-repeat:no-repeat;
 	height:84px;
-	left:250px;
-	top:0px;
+	left:260px;
+	top:202px;
 	width:94px;
 }
-#Stage #Body {
+#Turkey #Body {
 	background-image:url(../images/turkey_body.svg);
-	background-position:center center;
+	background-position:center bottom;
 	background-repeat:no-repeat;
+	bottom:0;
 	height:226px;
-	left:;
-	top:145px;
-	width:242px;
+	width:327px;
 }
-#Stage #Neck {
+#Turkey #Feathers {
+	background-image:url(../images/turkey_feathers.svg);
+	background-position:center top;
+	background-repeat:no-repeat;
+	height:301px;
+	left:15px;
+	top:45px;
+	width:327px;
+}
+#Turkey #Neck {
 	background-image:url(../images/turkey_neck.svg);
 	background-position:center bottom;
 	background-repeat:no-repeat;
-	height:295px;
-	left:60.5px;
+	height:270px;
+	left:115px;
+	top:0px;
 	width:124px;
 }
-#Stage #Head {
+#Turkey #Head {
 	background-image:url(../images/turkey_head_eyes-normal.svg);
 	xbackground-image:url(../images/turkey_head_eyes-bulge.svg);
 	background-position:center bottom;
@@ -166,12 +180,14 @@ $(function() {
 <h1>Guess the Word Before Turkey Becomes Dinner!</h1>
 
 <div id="Stage">
-	<div id="LeftLeg"></div>
-	<div id="RightLeg"></div>
-	<div id="LeftWing"></div>
-	<div id="RightWing"></div>
-	<div id="Body"></div>
-	<div id="Neck"><div id="Head"></div></div>
+	<div id="Turkey">
+		<div id="LeftLeg"></div>
+		<div id="RightLeg"></div>
+		<div id="LeftWing"></div>
+		<div id="RightWing"></div>
+		<div id="Feathers"><div id="Body"></div></div>
+		<div id="Neck"><div id="Head"></div></div>
+	</div>
 </div>
 
 <div id="TotalScore">Total Score: <strong>{{ .TotalScore }}</strong></div>
