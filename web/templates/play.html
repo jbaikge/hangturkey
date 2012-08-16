@@ -140,27 +140,29 @@ li a {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
+var incorrects = 0;
 var animap = []
-var prepAnimap = function(t) {
+var prepAnimap = function(turkey) {
+	var t = null
 	// 0 wrong
-	animap[0] = {}
+	// animap[0] = {}
 	// 1 wrong
-	var body = t.find('#Body')
+	t = turkey.find('#Body')
 	animap[1] = {
-		id: body.attr('id'),
+		id: t.attr('id'),
 		init: {
 			height: 0,
-			left:   body.position().left + body.width() / 2,
-			top:    body.position().top  + body.height() / 2,
+			left:   t.position().left + t.width() / 2,
+			top:    t.position().top  + t.height() / 2,
 			width:  0
 		},
 		queue: [
 			{
 				properties: {
-					height: body.height() * 1.20,
-					left:   body.position().left - body.width() * 0.10,
-					top:    body.position().top - body.height() * 0.10,
-					width:  body.width() * 1.20
+					height: t.height() * 1.20,
+					left:   t.position().left - t.width() * 0.10,
+					top:    t.position().top - t.height() * 0.10,
+					width:  t.width() * 1.20
 				},
 				options: {
 					duration: 300,
@@ -169,10 +171,10 @@ var prepAnimap = function(t) {
 			},
 			{
 				properties: {
-					height: body.height(),
-					left:   body.position().left,
-					top:    body.position().top,
-					width:  body.width()
+					height: t.height(),
+					left:   t.position().left,
+					top:    t.position().top,
+					width:  t.width()
 				},
 				options: {
 					duration: 100,
@@ -180,6 +182,87 @@ var prepAnimap = function(t) {
 				}
 			}
 		]
+	}
+	// 2 wrong
+	t = turkey.find('#LeftLeg')
+	animap[2] = {
+		id: t.attr('id'),
+		init: {
+			top: t.position().top - t.height()
+		},
+		queue: [
+			{
+				properties: {
+					top: t.position().top
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
+	}
+	// 3 wrong
+	t = turkey.find('#RightLeg')
+	animap[3] = {
+		id: t.attr('id'),
+		init: {
+			top: t.position().top - t.height()
+		},
+		queue: [
+			{
+				properties: {
+					top: t.position().top
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
+	}
+	// 4 wrong
+	t = turkey.find('#LeftWing')
+	animap[4] = {
+		id: t.attr('id'),
+		init: {
+			left: t.position().left + t.width()
+		},
+		queue: [
+			{
+				properties: {
+					left: t.position().left
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
+	}
+	// 5 wrong
+	t = turkey.find('#RightWing')
+	animap[5] = {
+		id: t.attr('id'),
+		init: {
+			left: t.position().left - t.width()
+		},
+		queue: [
+			{
+				properties: {
+					left: t.position().left
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
+	}
+	// 6 wrong
+	t = turkey.find('#Neck')
+	animap[6] = {
+		id: t.attr('id'),
+		init: {
+
+		},
+		
 	}
 }
 var prepDOM = function(id) {
@@ -195,6 +278,9 @@ var prepDOM = function(id) {
 	t.find('> div').css('display', 'none')
 }
 var addAppendage = function(idx) {
+	if (animap[idx] == undefined) {
+		return
+	}
 	var ani = animap[idx]
 	var target = $('#' + ani.id)
 	ani.init.display = ''
@@ -225,7 +311,10 @@ $(function() {
 				return
 			}
 			if (!data.Correct) {
-				console.log("Attach next thing to turkey")
+				do {
+					incorrects++
+					addAppendage(incorrects)
+				} while (incorrects < data.WrongCount)
 			}
 			$('#Word li').each(function(i, l) {
 				$(l).text(data.Guessed[i])
