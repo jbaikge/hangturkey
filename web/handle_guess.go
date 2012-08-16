@@ -14,6 +14,7 @@ type guessMessage struct {
 	Message    string
 	TotalScore int
 	WordScore  int
+	WrongCount int
 }
 
 const guessURL = "/guess/"
@@ -39,6 +40,7 @@ func GuessHandler(w http.ResponseWriter, req *http.Request, ctx *Context) error 
 	msg.Guessed = ctx.State.GuessedLetters()
 	msg.TotalScore = ctx.TotalScore()
 	msg.WordScore = ctx.WordScore()
+	msg.WrongCount = ctx.State.IncorrectGuesses()
 
 	// Resave guesses
 	ctx.SaveSession()

@@ -78,6 +78,10 @@ func (s GameState) HasWon() (won bool) {
 	return
 }
 
+func (s GameState) IncorrectGuesses() int {
+	return len(s.Guesses[s.CurrentWord].Incorrect)
+}
+
 func (s GameState) IsSpace(idx int) bool {
 	return s.CurrentLetters()[idx] == " "
 }
