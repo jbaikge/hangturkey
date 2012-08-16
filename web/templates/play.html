@@ -260,9 +260,24 @@ var prepAnimap = function(turkey) {
 	animap[6] = {
 		id: t.attr('id'),
 		init: {
-
+			height: 0,
+			left: t.position().left + t.width() / 2,
+			top: t.position().top + t.height(),
+			width: 0
 		},
-		
+		queue: [
+			{
+				properties: {
+					height: t.height(),
+					left: t.position().left,
+					top: t.position().top,
+					width: t.width()
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
 	}
 }
 var prepDOM = function(id) {
@@ -271,7 +286,7 @@ var prepDOM = function(id) {
 	t.append($('<div id="RightLeg"></div>'))
 	t.append($('<div id="LeftWing"></div>'))
 	t.append($('<div id="RightWing"></div>'))
-	t.append($('<div id="Body"><div id="Feathers"><div id="Torso"></div></div></div>'))
+	t.append($('<div id="Body"></div>'))
 	t.append($('<div id="Neck"><div id="Head"></div></div>'))
 	$(id).append(t)
 	prepAnimap(t)
