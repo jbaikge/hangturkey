@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="612px" height="792px" viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
+<g>
+	<path fill="#79291B" d="M206.016,173.879l-0.24,0.012c-8.264,0.449-19.58,1.062-20.353,1.072c-1.287,0.016-2.534,0.555-3.419,1.48
+		c-0.864,0.902-1.338,2.08-1.338,3.314c0,0.027,0.001,0.131,0.002,0.156c0.133,3.959,0.986,12.713,1.453,17.301
+		c-2.318,0.908-4.849,2.801-6.518,6.674c-1.242,2.879-1.871,6.59-1.871,11.025c0,2.455,0.2,4.357,0.261,4.881
+		c0.58,4.037,1.975,7.076,4.271,9.355c9.041,8.969,25.583,0.354,30.437-2.502c1.458-0.855,2.364-2.439,2.364-4.131v-43.855
+		c0-1.309-0.545-2.576-1.495-3.477C208.619,174.283,207.324,173.809,206.016,173.879z"/>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="192.3989" y1="236.3276" x2="192.3989" y2="169.5116">
+		<stop  offset="0.1348" style="stop-color:#FFE079"/>
+		<stop  offset="0.1965" style="stop-color:#FFDE70"/>
+		<stop  offset="0.2954" style="stop-color:#FFD959"/>
+		<stop  offset="0.4185" style="stop-color:#FFD033"/>
+		<stop  offset="0.5337" style="stop-color:#FFC609"/>
+		<stop  offset="0.594" style="stop-color:#F8BD0B"/>
+		<stop  offset="0.6903" style="stop-color:#E7A612"/>
+		<stop  offset="0.7247" style="stop-color:#DF9C15"/>
+		<stop  offset="0.9719" style="stop-color:#FFC609"/>
+	</linearGradient>
+	<path fill="url(#SVGID_1_)" d="M206.274,178.662c-10.184,0.553-20.146,1.094-20.816,1.094c0.174,5.207,1.722,19.793,1.734,19.896
+		l0.185,1.533h-0.856c-3.009,0-5.201,1.549-6.517,4.6c-1.196,2.775-1.479,6.355-1.479,9.129c0,2.473,0.226,4.301,0.23,4.34
+		c0.411,2.844,1.356,4.979,2.887,6.498c6.906,6.85,22.708-2.102,24.633-3.234v-7.213v-33.059V178.662z"/>
+	<path fill="#79291B" d="M190.593,228.768c0,0-3.379-0.496-3.725-7.922c-0.348-7.432,0.866-10.896,0.866-10.896
+		s-2.858,3.961-2.167,12.627c0.693,8.668,2.513,7.926,2.513,7.926L190.593,228.768z"/>
+</g>
+</svg>

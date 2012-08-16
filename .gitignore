@@ -3,5 +3,6 @@
 !*.go
 !*.json
 !*/
+!web/assets/*/*
 !web/templates/*.html
 !app
