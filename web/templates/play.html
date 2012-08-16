@@ -4,6 +4,9 @@
 {{ $state := .State }}
 
 <style type="text/css">
+body {
+	background:#CCC;
+}
 h2 {
 	clear:both;
 	margin:0;
@@ -58,10 +61,11 @@ li a {
 }
 #Turkey {
 	border:1px solid #F00;
-	width:354px;
 	height:385px;
+	position:relative;
+	width:359px;
 }
-#Turkey div {
+#Turkey > div {
 	position:absolute;
 	xbackground-color:rgba(0, 0, 0, 0.25);
 }
@@ -93,24 +97,18 @@ li a {
 	background-image:url(../images/turkey_wing_right.svg);
 	background-repeat:no-repeat;
 	height:84px;
-	left:260px;
+	left:265px;
 	top:202px;
 	width:94px;
 }
 #Turkey #Body {
-	background-image:url(../images/turkey_body.svg);
-	background-position:center bottom;
-	background-repeat:no-repeat;
-	bottom:0;
-	height:226px;
-	width:327px;
-}
-#Turkey #Feathers {
-	background-image:url(../images/turkey_feathers.svg);
-	background-position:center top;
-	background-repeat:no-repeat;
-	height:301px;
+	background-image:    url(../images/turkey_body.svg), url(../images/turkey_feathers.svg);
+	background-position: center bottom,                  center top;
+	background-repeat:   no-repeat,                      no-repeat;
+	background-size:     73.394% auto,                   100% auto;
+	height:300px;
 	left:15px;
+	overflow:hidden;
 	top:45px;
 	width:327px;
 }
@@ -142,6 +140,69 @@ li a {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
+var animap = []
+var prepAnimap = function(t) {
+	// 0 wrong
+	animap[0] = {}
+	// 1 wrong
+	var body = t.find('#Body')
+	animap[1] = {
+		id: body.attr('id'),
+		init: {
+			height: 0,
+			left:   body.position().left + body.width() / 2,
+			top:    body.position().top  + body.height() / 2,
+			width:  0
+		},
+		queue: [
+			{
+				properties: {
+					height: body.height() * 1.20,
+					left:   body.position().left - body.width() * 0.10,
+					top:    body.position().top - body.height() * 0.10,
+					width:  body.width() * 1.20
+				},
+				options: {
+					duration: 300,
+					queue:    true
+				}
+			},
+			{
+				properties: {
+					height: body.height(),
+					left:   body.position().left,
+					top:    body.position().top,
+					width:  body.width()
+				},
+				options: {
+					duration: 100,
+					queue:    true
+				}
+			}
+		]
+	}
+}
+var prepDOM = function(id) {
+	var t = $('<div id="Turkey"></div>')
+	t.append($('<div id="LeftLeg"></div>'))
+	t.append($('<div id="RightLeg"></div>'))
+	t.append($('<div id="LeftWing"></div>'))
+	t.append($('<div id="RightWing"></div>'))
+	t.append($('<div id="Body"><div id="Feathers"><div id="Torso"></div></div></div>'))
+	t.append($('<div id="Neck"><div id="Head"></div></div>'))
+	$(id).append(t)
+	prepAnimap(t)
+	t.find('> div').css('display', 'none')
+}
+var addAppendage = function(idx) {
+	var ani = animap[idx]
+	var target = $('#' + ani.id)
+	ani.init.display = ''
+	target.css(ani.init)
+	for (var i = 0; i < ani.queue.length; i++) {
+		target.animate(ani.queue[i].properties, ani.queue[i].options)
+	}
+}
 $(function() {
 	$('#Alphabet a').click(function(e) {
 		e.preventDefault()
@@ -175,20 +236,14 @@ $(function() {
 		})
 	})
 })
+$(function() {
+	prepDOM('#Stage')
+})
 </script>
 
 <h1>Guess the Word Before Turkey Becomes Dinner!</h1>
 
-<div id="Stage">
-	<div id="Turkey">
-		<div id="LeftLeg"></div>
-		<div id="RightLeg"></div>
-		<div id="LeftWing"></div>
-		<div id="RightWing"></div>
-		<div id="Feathers"><div id="Body"></div></div>
-		<div id="Neck"><div id="Head"></div></div>
-	</div>
-</div>
+<div id="Stage"></div>
 
 <div id="TotalScore">Total Score: <strong>{{ .TotalScore }}</strong></div>
 <div id="WordScore">Word Score: <strong>{{ .WordScore }}</strong></div>
