@@ -261,17 +261,17 @@ var prepAnimap = function(turkey) {
 		id: t.attr('id'),
 		init: {
 			height: 0,
-			left: t.position().left + t.width() / 2,
-			top: t.position().top + t.height(),
-			width: 0
+			left:   t.position().left + t.width() / 2,
+			top:    t.position().top + t.height(),
+			width:  0
 		},
 		queue: [
 			{
 				properties: {
 					height: t.height(),
-					left: t.position().left,
-					top: t.position().top,
-					width: t.width()
+					left:   t.position().left,
+					top:    t.position().top,
+					width:  t.width()
 				},
 				options: {
 					queue: true
