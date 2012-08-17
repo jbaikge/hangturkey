@@ -1,7 +1,6 @@
 package web
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -10,11 +9,14 @@ func init() {
 }
 
 func NewWordHandler(w http.ResponseWriter, req *http.Request, ctx *Context) (err error) {
-	if ctx.State.UpdateCurrent() {
+	switch {
+	case !ctx.CanGuess():
+		http.Redirect(w, req, "/leaderboard", http.StatusTemporaryRedirect)
+	case ctx.State.UpdateCurrent():
 		ctx.SaveSession()
 		http.Redirect(w, req, "/play", http.StatusTemporaryRedirect)
-	} else {
-		log.Print("FORWARD TO LEADERBOARD")
+	default:
+		http.Redirect(w, req, "/leaderboard", http.StatusTemporaryRedirect)
 	}
 	return
 }

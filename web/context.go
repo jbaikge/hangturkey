@@ -37,8 +37,18 @@ func NewContext(w http.ResponseWriter, req *http.Request) (*Context, error) {
 	}, nil
 }
 
+func (c Context) CanGuess() bool {
+	_, ok := c.Session.Values["cutoff"]
+	return !ok
+}
+
 func (c *Context) Close() {
 	// noop
+}
+
+func (c *Context) DenyGuesses() {
+	c.Session.Values["cutoff"] = true
+	c.SaveSession()
 }
 
 func (c *Context) SaveSession() {
