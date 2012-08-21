@@ -124,11 +124,27 @@ li a {
 }
 #Turkey #Head {
 	background-image:url(../images/turkey_head_eyes-normal.svg);
-	xbackground-image:url(../images/turkey_head_eyes-bulge.svg);
 	background-position:center bottom;
 	background-repeat:no-repeat;
 	height:168px;
+	position:absolute;
 	width:124px;
+	z-index:200;
+}
+#Turkey #Head.alarmed {
+	background-image:url(../images/turkey_head_eyes-bulge.svg);
+}
+#Rope {
+	background-image:url(../images/hangman_noose.svg);
+	background-position:center bottom;
+	background-repeat:no-repeat;
+	background-size:100% auto;
+	height:792px;
+	left:-204px;
+	position:absolute;
+	top:-480px;
+	width:859px;
+	z-index:120;
 }
 #Word li {
 	background:#CCC;
@@ -280,6 +296,7 @@ var prepAnimap = function(turkey) {
 			}
 		]
 	}
+	// 7 wrong 
 }
 var prepDOM = function(id) {
 	var t = $('<div id="Turkey"></div>')
@@ -289,7 +306,11 @@ var prepDOM = function(id) {
 	t.append($('<div id="RightWing"></div>'))
 	t.append($('<div id="Body"></div>'))
 	t.append($('<div id="Neck"><div id="Head"></div></div>'))
+
+	var r = $('<div id="Rope"></div>')
+
 	$(id).append(t)
+	$(id).append(r)
 	prepAnimap(t)
 	t.find('> div').css('display', 'none')
 }
