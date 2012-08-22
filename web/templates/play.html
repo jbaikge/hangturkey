@@ -129,7 +129,7 @@ li a {
 	height:168px;
 	position:absolute;
 	width:124px;
-	z-index:200;
+	z-index:2;
 }
 #Turkey #Head.alarmed {
 	background-image:url(../images/turkey_head_eyes-bulge.svg);
@@ -139,12 +139,12 @@ li a {
 	background-position:center bottom;
 	background-repeat:no-repeat;
 	background-size:100% auto;
-	height:792px;
-	left:-204px;
+	height:361px;
+	left:183px;
 	position:absolute;
-	top:-480px;
-	width:859px;
-	z-index:120;
+	top:-118px;
+	width:90px;
+	z-index:1;
 }
 #Word li {
 	background:#CCC;
@@ -301,12 +301,12 @@ var prepAnimap = function(turkey) {
 	animap[7] = {
 		id: t.attr('id'),
 		init: {
-			top: t.position().top - 200
+			top: -t.height()
 		},
 		queue: [
 			{
 				properties: {
-					top: t.position().top
+					top: t.position().top + 40
 				},
 				options: {
 					queue: true
@@ -314,14 +314,23 @@ var prepAnimap = function(turkey) {
 			},
 			{
 				properties: {
-					top: t.position().top - 200
+					top: t.position().top
 				},
 				options: {
+					duration: 100,
 					queue: true
 				}
 			}
 		]
 	}
+			// {
+			// 	properties: {
+			// 		top: -t.height()
+			// 	},
+			// 	options: {
+			// 		queue: true
+			// 	}
+			// }
 }
 var prepDOM = function(id) {
 	var t = $('<div id="Turkey"></div>')
