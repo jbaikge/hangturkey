@@ -296,7 +296,32 @@ var prepAnimap = function(turkey) {
 			}
 		]
 	}
-	// 7 wrong 
+	// 7 wrong
+	t = $('#Rope')
+	animap[7] = {
+		id: t.attr('id'),
+		init: {
+			top: t.position().top - 200
+		},
+		queue: [
+			{
+				properties: {
+					top: t.position().top
+				},
+				options: {
+					queue: true
+				}
+			},
+			{
+				properties: {
+					top: t.position().top - 200
+				},
+				options: {
+					queue: true
+				}
+			}
+		]
+	}
 }
 var prepDOM = function(id) {
 	var t = $('<div id="Turkey"></div>')
