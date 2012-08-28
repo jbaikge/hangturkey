@@ -1,0 +1,149 @@
+body {
+	background:#CCC;
+}
+h2 {
+	clear:both;
+	margin:0;
+	padding:1em 0;
+}
+ol {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+li {
+	display:block;
+	float:left;
+	height:2em;
+	line-height:2em;
+	margin:0 0.5em 0.5em 0;
+	text-align:center;
+	width:2.5em;
+}
+li a {
+	display:block;
+	height:100%;
+}
+#Alphabet {
+	/* (2.5 + 0.5) * 13 + 1 (for good measure)*/
+	width:40em;
+}
+#Alphabet li {
+	background:yellow;
+}
+#Alphabet li.correct {
+	background:green;
+}
+#Alphabet li.wrong {
+	background:red;
+}
+#Error {
+	color:#C10;
+}
+#Guess {
+	clear:both;
+}
+#NewWord {
+	clear:both;
+	display:none;
+}
+#Stage {
+	border:1px solid #000;
+	height:500px;
+	position:relative;
+	width:460px;
+}
+#Turkey {
+	border:1px solid #F00;
+	height:385px;
+	margin:115px auto 0;
+	position:relative;
+	width:359px;
+}
+#Turkey > div {
+	position:absolute;
+	xbackground-color:rgba(0, 0, 0, 0.25);
+}
+#Turkey #LeftLeg {
+	background-image:url(../images/turkey_leg_left.svg);
+	background-repeat:no-repeat;
+	height:60px;
+	left:140px;
+	top:325px;
+	width:38px;
+}
+#Turkey #RightLeg {
+	background-image:url(../images/turkey_leg_right.svg);
+	background-repeat:no-repeat;
+	height:60px;
+	left:182px;
+	top:325px;
+	width:38px;
+}
+#Turkey #LeftWing {
+	background-image:url(../images/turkey_wing_left.svg);
+	background-repeat:no-repeat;
+	height:84px;
+	left:0px;
+	top:202px;
+	width:94px;
+}
+#Turkey #RightWing {
+	background-image:url(../images/turkey_wing_right.svg);
+	background-repeat:no-repeat;
+	height:84px;
+	left:265px;
+	top:202px;
+	width:94px;
+}
+#Turkey #Body {
+	background-image:    url(../images/turkey_body.svg), url(../images/turkey_feathers.svg);
+	background-position: center bottom,                  center top;
+	background-repeat:   no-repeat,                      no-repeat;
+	background-size:     73.394% auto,                   100% auto;
+	height:300px;
+	left:15px;
+	overflow:hidden;
+	top:45px;
+	width:327px;
+}
+#Turkey #Neck {
+	background-image:url(../images/turkey_neck.svg);
+	background-position:center bottom;
+	background-repeat:no-repeat;
+	height:270px;
+	left:115px;
+	top:0px;
+	width:124px;
+}
+#Turkey #Head {
+	background-image:url(../images/turkey_head_eyes-normal.svg);
+	background-position:center bottom;
+	background-repeat:no-repeat;
+	height:168px;
+	position:absolute;
+	width:124px;
+	z-index:2;
+}
+#Turkey #Head.alarmed {
+	background-image:url(../images/turkey_head_eyes-bulge.svg);
+}
+#Rope {
+	background-image:url(../images/hangman_noose.svg);
+	background-position:center bottom;
+	background-repeat:no-repeat;
+	background-size:100% auto;
+	height:361px;
+	left:183px;
+	position:absolute;
+	top:-118px;
+	width:90px;
+	z-index:1;
+}
+#Word li {
+	background:#CCC;
+	border-bottom:1px solid #000;
+}
+#Word li.space {
+	border:0;
+}
