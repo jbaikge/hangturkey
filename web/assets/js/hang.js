@@ -5,14 +5,40 @@ var prepAnimap = function(turkey) {
 	// 0 wrong
 	// animap[0] = {}
 	// 1 wrong
+	animap[1] = function() {
+		var t = turkey.find('#Body')
+		t.css({
+			display: '',
+			height:  0,
+			left:    t.position().left + t.width() / 2,
+			top:     t.position().top  + t.height() / 2,
+			width:   0
+		})
+		t.animate({
+			height: t.height() * 1.20,
+			left:   t.position().left - t.width() * 0.10,
+			top:    t.position().top - t.height() * 0.10,
+			width:  t.width() * 1.20
+		},
+		{
+			duration: 300,
+			queue:    true
+		})
+		t.animate({
+			height: t.height(),
+			left:   t.position().left,
+			top:    t.position().top,
+			width:  t.width()
+		},
+		{
+			duration: 100,
+			queue:    true
+		})
+	}
 	t = turkey.find('#Body')
 	animap[1] = {
 		id: t.attr('id'),
 		init: {
-			height: 0,
-			left:   t.position().left + t.width() / 2,
-			top:    t.position().top  + t.height() / 2,
-			width:  0
 		},
 		queue: [
 			{
