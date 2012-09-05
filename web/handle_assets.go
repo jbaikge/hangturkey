@@ -7,5 +7,7 @@ import (
 
 func init() {
 	mime.AddExtensionType(".svg", "image/svg+xml")
-	http.Handle("/images/", http.FileServer(http.Dir("web/assets")))
+	for _, path := range []string{"css", "images", "js"} {
+		http.Handle("/"+path+"/", http.FileServer(http.Dir("web/assets")))
+	}
 }
