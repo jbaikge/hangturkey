@@ -35,38 +35,6 @@ var prepAnimap = function(turkey) {
 			queue:    true
 		})
 	}
-	t = turkey.find('#Body')
-	animap[1] = {
-		id: t.attr('id'),
-		init: {
-		},
-		queue: [
-			{
-				properties: {
-					height: t.height() * 1.20,
-					left:   t.position().left - t.width() * 0.10,
-					top:    t.position().top - t.height() * 0.10,
-					width:  t.width() * 1.20
-				},
-				options: {
-					duration: 300,
-					queue:    true
-				}
-			},
-			{
-				properties: {
-					height: t.height(),
-					left:   t.position().left,
-					top:    t.position().top,
-					width:  t.width()
-				},
-				options: {
-					duration: 100,
-					queue:    true
-				}
-			}
-		]
-	}
 	// 2 wrong
 	t = turkey.find('#LeftLeg')
 	animap[2] = {
