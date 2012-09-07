@@ -1,111 +1,129 @@
 var incorrects = 0;
 var animap = []
 var prepAnimap = function() {
+	// Precache element, positions, heights, and widths. As soon as display is
+	// set to 'none', the positions get wacky. Also, this reduces lookups for
+	// more speeeeeeeeeeed
+	var parts = {}
+	$('#Turkey, #Rope').children().andSelf().each(function() {
+		var self = $(this)
+		parts[self.attr('id')] = {
+			elem:   self,
+			height: self.height(),
+			width:  self.width(),
+			top:    self.position().top,
+			left:   self.position().left
+		}
+	})
+
 	// 1 wrong
 	animap[1] = function() {
-		var t = $('#Body')
-		t.animate({
-			height: t.height() * 1.20,
-			left:   t.position().left - t.width() * 0.10,
-			top:    t.position().top - t.height() * 0.10,
-			width:  t.width() * 1.20
-		},
-		{
-			duration: 300,
-			queue:    true
-		}).animate({
-			height: t.height(),
-			left:   t.position().left,
-			top:    t.position().top,
-			width:  t.width()
-		},
-		{
-			duration: 100,
-			queue:    true
-		}).css({
+		// t for target, not the store
+		var t = parts['Body']
+		t.elem.css({
 			display: '',
 			height:  0,
-			left:    t.position().left + t.width() / 2,
-			top:     t.position().top  + t.height() / 2,
+			left:    t.left + t.width / 2,
+			top:     t.top  + t.height / 2,
 			width:   0
+		}).animate({
+			height: t.height * 1.20,
+			left:   t.left - t.width * 0.10,
+			top:    t.top - t.height * 0.10,
+			width:  t.width * 1.20
+		}, {
+			duration: 300,
+		}).animate({
+			height: t.height,
+			left:   t.left,
+			top:    t.top,
+			width:  t.width
+		}, {
+			duration: 100,
 		})
 	}
 	// 2 wrong
 	animap[2] = function() {
-		var t = $("#LeftLeg")
-		t.css({
+		var t = parts["LeftLeg"]
+		t.elem.css({
 			display: '',
-			top:     t.position().top - t.height()
-		})
-		t.animate({ top: t.position().top })
+			top:     t.top - t.height
+		}).animate({ top: t.top })
 	}
 	// 3 wrong
 	animap[3] = function() {
-		var t = $("#RightLeg")
-		t.css({
+		var t = parts["RightLeg"]
+		t.elem.css({
 			display: '',
-			top:     t.position().top - t.height()
-		})
-		t.animate({ top: t.position().top })
+			top:     t.top - t.height
+		}).animate({ top: t.top })
 	}
 	// 4 wrong
 	animap[4] = function() {
-		var t = $('#LeftWing')
-		t.css({
+		var t = parts['LeftWing']
+		t.elem.css({
 			display: '',
-			left:    t.position().left + t.width()
-		})
-		t.animate({ left: t.position().left })
+			left:    t.left + t.width
+		}).animate({ left: t.left })
 	}
 	// 5 wrong
 	animap[5] = function() {
-		var t = $('#RightWing')
-		t.css({
+		var t = parts['RightWing']
+		t.elem.css({
 			display: '',
-			left:    t.position().left - t.width()
-		})
-		t.animate({ left: t.position().left })
+			left:    t.left - t.width
+		}).animate({ left: t.left })
 	}
 	// 6 wrong
 	animap[6] = function() {
-		var t = $('#Neck')
-		t.css({
-			height: 0,
-			left:   t.position().left + t.width() / 2,
-			top:    t.position().top + t.height(),
-			width:  0
-		})
-		t.animate({
-			height: t.height(),
-			left:   t.position().left,
-			top:    t.position().top,
-			width:  t.width()
+		var t = parts['Neck']
+		t.elem.css({
+			display: '',
+			height:  0,
+			left:    t.left + t.width / 2,
+			top:     t.top + t.height,
+			width:   0
+		}).animate({
+			height: t.height,
+			left:   t.left,
+			top:    t.top,
+			width:  t.width
 		})
 	}
 	// 7 wrong
 	animap[7] = function() {
-		var rope = $('#Rope')
-		var ropedTurkey = $('#Rope, #Turkey')
-		rope.css({
+		var rope = parts["Rope"]
+		var ropedTurkey = parts["Rope"].elem.add(parts["Turkey"].elem)
+		var stage = $('#Stage')
+		rope.elem.css({
 			display: '',
-			top:     -t.height()
+			top:     -rope.height
 		})
-		// Drop noose
-		rope.animate({
-			top: t.position().top + 40
-		}, {
-			//queue: true
-		})
-		// Tighten noose around neck
-		rope.animate({
-			top: t.position().top
-		}, {
-			duration: 100//,
-			//queue:    true
-		})
-		// Launch the turkey off stage
-		ropedTurkey.animate({
-			top: -$('#Stage').height()
+		stage.queue(function(next) {
+			// Drop noose
+			rope.elem.animate({
+				top: rope.top + 40
+			}, next)
+		}).queue(function(next) {
+			// Pause for drama
+			setTimeout(next, 250)
+		}).queue(function(next) {
+			// Tighten noose around neck
+			rope.elem.animate({
+				top: rope.top
+			}, 75, next)
+		}).queue(function(next) {
+			// Enlarge eyeballs
+			$('#Head').addClass('alarmed')
+			next()
+		}).queue(function(next) {
+			// Pause for drama
+			setTimeout(next, 500)
+		}).queue(function(next) {
+			// Launch the turkey off stage
+			ropedTurkey.animate({
+				top: stage.height() * -1 // FireFox loses it's balls with the leading -
+			}, next)
 		})
 	}
 }
@@ -123,7 +141,7 @@ var prepDOM = function(id) {
 	$(id).append(t)
 	$(id).append(r)
 	prepAnimap()
-	t.find('> div').css('display', 'none')
+	t.find('> div').add(r).css('display', 'none')
 }
 var addAppendage = function(idx) {
 	if (animap[idx] == undefined) {
