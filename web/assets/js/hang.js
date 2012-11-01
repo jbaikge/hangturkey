@@ -124,6 +124,9 @@ var prepAnimap = function() {
 			ropedTurkey.animate({
 				top: stage.height() * -1 // FireFox loses it's balls with the leading -
 			}, next)
+		}).queue(function(next) {
+			// Bounce to get a new word
+			document.location.replace("new-word")
 		})
 	}
 }
